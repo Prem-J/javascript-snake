@@ -57,13 +57,13 @@ function game() {
 	playerY += yVelocity;
 	overflowCheck();
 
-	// fill background into grey
-	ctx.fillStyle = '#008000';
+	// fill background into green
+	ctx.fillStyle = '#329932';
 	ctx.fillRect(0, 0, htc * scale, vtc * scale);
 
 	drawLines(htc * scale, vtc * scale, scale, ctx);
 
-	ctx.fillStyle = '#842121';
+	ctx.fillStyle = '#421010';
 	for (var i = 0; i < places.length; i++) {
 		ctx.fillRect(places[i].x * scale + 1, places[i].y * scale + 1, scale - 2, scale - 2);
 		if (places[i].x == playerX && places[i].y == playerY) {
