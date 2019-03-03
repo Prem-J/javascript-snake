@@ -40,7 +40,7 @@ window.onload = function() {
 
 	ctx = canvas.getContext('2d');
 	addEventListener('keydown', keyPressed);
-	setInterval(game, 1000 / 13);
+	setInterval(game, 1000 / 11);
 };
 
 function tileCount() {
@@ -58,12 +58,12 @@ function game() {
 	overflowCheck();
 
 	// fill background into grey
-	ctx.fillStyle = '#192a56';
+	ctx.fillStyle = '#008000';
 	ctx.fillRect(0, 0, htc * scale, vtc * scale);
 
 	drawLines(htc * scale, vtc * scale, scale, ctx);
 
-	ctx.fillStyle = 'lime';
+	ctx.fillStyle = '#842121';
 	for (var i = 0; i < places.length; i++) {
 		ctx.fillRect(places[i].x * scale + 1, places[i].y * scale + 1, scale - 2, scale - 2);
 		if (places[i].x == playerX && places[i].y == playerY) {
