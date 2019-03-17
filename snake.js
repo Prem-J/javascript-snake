@@ -3,36 +3,30 @@ ctx = null;
 places = [];
 tail = 5;
 scale = 30;
+direction = '';
 
 window.onload = function() {
 	canvas = document.getElementById('mainCanvas');
 	tileCount();
 	canvas.width = htc * scale;
 	canvas.height = vtc * scale;
-	console.log(vtc, htc);
 
 	mc = new Hammer(canvas);
 	mc.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
+
 	mc.on('swipeleft', function() {
-		console.log('swipedleft');
-		xVelocity = -1;
-		yVelocity = 0;
+		directionChange('left');
 	});
 	mc.on('swipeup', function() {
-		console.log('swipedup');
-		xVelocity = 0;
-		yVelocity = -1;
+		directionChange('up');
 	});
 	mc.on('swiperight', function() {
-		console.log('swipedright');
-		xVelocity = 1;
-		yVelocity = 0;
+		directionChange('right');
 	});
 	mc.on('swipedown', function() {
-		console.log('swipeddown');
-		xVelocity = 0;
-		yVelocity = 1;
+		directionChange('down');
 	});
+
 	playerX = randomStartPos(htc);
 	playerY = randomStartPos(vtc);
 	appleX = randomStartPos(htc);
@@ -42,6 +36,28 @@ window.onload = function() {
 	addEventListener('keydown', keyPressed);
 	setInterval(game, 1000 / 11);
 };
+
+function directionChange(directionToChange) {
+	console.log(direction, directionToChange);
+
+	if (directionToChange == 'up' && direction != 'down') {
+		xVelocity = 0;
+		yVelocity = -1;
+		direction = directionToChange;
+	} else if (directionToChange == 'down' && direction != 'up') {
+		xVelocity = 0;
+		yVelocity = 1;
+		direction = directionToChange;
+	} else if (directionToChange == 'right' && direction != 'left') {
+		xVelocity = 1;
+		yVelocity = 0;
+		direction = directionToChange;
+	} else if (directionToChange == 'left' && direction != 'right') {
+		xVelocity = -1;
+		yVelocity = 0;
+		direction = directionToChange;
+	}
+}
 
 function tileCount() {
 	vtc = Math.floor(window.innerHeight / scale);
@@ -68,7 +84,6 @@ function game() {
 		ctx.fillRect(places[i].x * scale + 1, places[i].y * scale + 1, scale - 2, scale - 2);
 		if (places[i].x == playerX && places[i].y == playerY) {
 			tail = 5;
-			console.log('delete');
 		}
 	}
 
@@ -106,17 +121,13 @@ function overflowCheck() {
 
 function keyPressed(e) {
 	if (e.keyCode == 37) {
-		xVelocity = -1;
-		yVelocity = 0;
+		directionChange('left');
 	} else if (e.keyCode == 38) {
-		xVelocity = 0;
-		yVelocity = -1;
+		directionChange('up');
 	} else if (e.keyCode == 39) {
-		xVelocity = 1;
-		yVelocity = 0;
+		directionChange('right');
 	} else if (e.keyCode == 40) {
-		xVelocity = 0;
-		yVelocity = 1;
+		directionChange('down');
 	}
 }
 
